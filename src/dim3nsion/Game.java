@@ -14,13 +14,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 class Game {
-    public String[] level;
     public Timer timer;
     private GraphicsContext canvas;
     private final int DESIRED_FRAME_RATE = 32;
     private GridPane gp;
     private Actor actor;
     private ActorListener al;
+    private FieldState fs;
     private double h,w;
     private GameStateController gsc;
 
@@ -45,20 +45,7 @@ class Game {
         this.w = can.getWidth();
         this.canvas = can.getGraphicsContext2D();
         System.out.println(new java.io.File(".").getAbsolutePath());
-        try {
-            InputStream is = new FileInputStream("src/res/levels/1.txt");
-            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-            String line = buf.readLine();
-            StringBuilder sb = new StringBuilder();
-            while (line != null) {
-                sb.append(line).append("\n");
-                line = buf.readLine();
-            }
-            level = sb.toString().split("\n");
-        }catch(IOException e){
-            level = new String[]{"0"};
-            e.printStackTrace();
-        }
+
     }
 
     public class GameLoop extends TimerTask {
@@ -75,9 +62,11 @@ class Game {
         startMusic();
         this.al = al;
         gsc = new GameStateController();
+        this.fs = new FieldState();
+        fs.load("1");
         //canvas.setFill(Color.BLUE);
         //canvas.fillRect(50,50,300,300);
-        actor = new Actor(100, 100);
+        actor = new Actor(100, 100, canvas, al, gsc);
         this.timer = new Timer();
         timer.schedule(new GameLoop(), 0, 1000 / DESIRED_FRAME_RATE);
     }
@@ -87,13 +76,13 @@ class Game {
         canvas.fillRect(0,0,w,h);
         int posy=0;
         canvas.setFill(Color.RED);
-        for (String str : level){
+        for (int[] str : fs.level){
             int posx = 0;
-            for (char let : str.toCharArray()){
-                posx += 32;
-                if (let == '1') canvas.fillRect(posx,posy,32,32);
+            for (int let : str){
+                if (let == 1) canvas.fillRect(posx,posy,48,48);
+                posx += 48;
             }
-            posy += 32;
+            posy += 48;
         }
     }
 
@@ -106,13 +95,6 @@ class Game {
     }
 
     private void moveCharacter(){
-        if (gsc.gameState == 1) {
-            if (al.UP) actor.y -= 5;
-            if (al.DOWN) actor.y += 5;
-            if (al.RIGHT) actor.x += 5;
-            if (al.LEFT) actor.x -= 5;
-            canvas.setFill(Color.BLUE);
-            canvas.fillRect(actor.x, actor.y, 50, 50);
-        }
+        actor.move();
     }
 }

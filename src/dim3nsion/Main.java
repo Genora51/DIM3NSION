@@ -35,7 +35,7 @@ public class Main extends Application {
         timeline.play();
         // Start game
         primaryStage.setTitle("DIM3NSION");
-        Scene rts = new Scene(root, 1280, 720);
+        Scene rts = new Scene(root, 1920, 1080);
         primaryStage.setScene(rts);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
