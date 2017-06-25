@@ -95,6 +95,6 @@ class Game {
     }
 
     private void moveCharacter(){
-        actor.move();
+        actor.move(fs.getState());
     }
 }
