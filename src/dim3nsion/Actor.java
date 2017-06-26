@@ -3,42 +3,64 @@ package dim3nsion;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-/**
- * Created by Genora51 on 24/06/2017.
- */
-public class Actor {
-    public int x;
-    public int y;
-    public GraphicsContext canvas;
-    public ActorListener al;
-    public GameStateController gsc;
-    public Actor(int x, int y, GraphicsContext canvas, ActorListener al, GameStateController gsc){
+
+class Actor {
+    private int x;
+    private int y;
+    private float yAcc;
+    boolean[] collisions = {false,false,false,false};
+    private GraphicsContext canvas;
+    private ActorListener al;
+    private GameStateController gsc;
+    Actor(int x, int y, GraphicsContext canvas, ActorListener al, GameStateController gsc){
         this.x = x;
         this.y = y;
+        this.yAcc = 0;
         this.canvas = canvas;
         this.gsc = gsc;
         this.al = al;
     }
-    public void move(int[][] curBlocks){
-        boolean[] collisions = detectCollisions(curBlocks);
+    void move(int[][] curBlocks){
         if (gsc.gameState == 1) {
-            if (collisions[3] && al.RIGHT) x += 5;
-            if (collisions[1] && al.LEFT) x -= 5;
-            if (collisions[2] && al.DOWN) y += 5;
-            if (collisions[0] && al.UP) y -= 5;
+            if (collisions[1] && al.RIGHT) x += 6;
+            if (collisions[3] && al.LEFT) x -= 6;
+
+            yAcc -= 1;
+            if (al.UP && !collisions[2]) yAcc = 12;
+            if(!collisions[0]) yAcc = 0;
+            y -= yAcc;
+            collisions = detectCollisions(curBlocks);
+            if (!collisions[2]){
+                yAcc = 0;
+                y = Math.floorDiv(y, 48) * 48;
+            }
+            if (!collisions[0]){
+                yAcc = 0;
+                y = (Math.floorDiv(y, 48) + 1) * 48;
+            }
+            if (!collisions[1]) x = Math.floorDiv(x, 48) * 48;
+            if (!collisions[3]) x = (Math.floorDiv(x, 48) + 1) * 48;
             canvas.setFill(Color.BLUE);
             canvas.fillRect(x, y, 48, 48);
         }
     }
 
-    boolean[] detectCollisions(int[][] curBlocks){
-        boolean[] colls = {false, false, false, false};
-        int yPos = Math.round(y/48f);
-        int xPos = Math.round(x/48f);
-        colls[0] = (curBlocks[xPos][yPos - 1]) == 0;
-        colls[1] = (curBlocks[xPos - 1][yPos]) == 0;
-        colls[2] = (curBlocks[xPos][yPos + 1]) == 0;
-        colls[3] = (curBlocks[xPos + 1][yPos]) == 0;
-        return colls;
+    private boolean[] detectCollisions(int[][] curBlocks) {
+        int yPos = Math.floorDiv(y, 48);
+        int xPos = Math.floorDiv(x, 48);
+        int xiPos = Math.floorDiv(x + 24, 48);
+        int yiPos = Math.floorDiv(y + 24, 48);
+        boolean[] cols = new boolean[4];
+        int[] xs = {xiPos, xPos + 1, xiPos, xPos};
+        int[] ys = {yPos, yiPos, yPos + 1, yiPos};
+        for (int a=0; a<4; a++){
+            try{
+                cols[a] = curBlocks[ys[a]][xs[a]] == 0;
+            }catch(ArrayIndexOutOfBoundsException e){
+                cols[a] = false;
+            }
+
+        }
+        return cols;
     }
 }

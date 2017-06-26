@@ -45,7 +45,10 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                getController().game.timer.cancel();
+                try {
+                    getController().game.timer.cancel();
+                }catch (NullPointerException e){
+                }
             }
         });
     }
