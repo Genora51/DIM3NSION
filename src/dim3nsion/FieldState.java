@@ -5,6 +5,8 @@ import java.io.*;
 
 public class FieldState {
     public int[][] level;
+    public int xDiff;
+    public int yDiff;
     public int[][] getState(){
         return level;
     }
@@ -36,5 +38,7 @@ public class FieldState {
             res = new int[][] {{0}};
         }
         this.level =  res;
+        this.xDiff = (1920 - (res[0].length*48))/2;
+        this.yDiff = (1080 - (res.length*48))/2;
     }
 }

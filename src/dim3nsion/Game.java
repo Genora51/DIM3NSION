@@ -79,7 +79,7 @@ class Game {
         for (int[] str : fs.level){
             int posx = 0;
             for (int let : str){
-                if (let == 1) canvas.fillRect(posx,posy,48,48);
+                if (let == 1) canvas.fillRect(posx + fs.xDiff,posy + fs.yDiff,48,48);
                 posx += 48;
             }
             posy += 48;
@@ -90,11 +90,11 @@ class Game {
         if (gsc.gameState == 0){
             Color newBlue = new Color(0,0,1,(gsc.loadCountup/gsc.LOAD_LENGTH));
             canvas.setFill(newBlue);
-            canvas.fillRect(100,100,50,50);
+            canvas.fillRect(100 + fs.xDiff,100 + fs.yDiff,50,50);
         }
     }
 
     private void moveCharacter(){
-        actor.move(fs.getState());
+        actor.move(fs);
     }
 }

@@ -20,7 +20,8 @@ class Actor {
         this.gsc = gsc;
         this.al = al;
     }
-    void move(int[][] curBlocks){
+    void move(FieldState fs){
+        int[][] curBlocks = fs.getState();
         if (gsc.gameState == 1) {
             if (collisions[1] && al.RIGHT) x += 6;
             if (collisions[3] && al.LEFT) x -= 6;
@@ -41,7 +42,7 @@ class Actor {
             if (!collisions[1]) x = Math.floorDiv(x, 48) * 48;
             if (!collisions[3]) x = (Math.floorDiv(x, 48) + 1) * 48;
             canvas.setFill(Color.BLUE);
-            canvas.fillRect(x, y, 48, 48);
+            canvas.fillRect(x + fs.xDiff, y + fs.yDiff, 48, 48);
         }
     }
 
