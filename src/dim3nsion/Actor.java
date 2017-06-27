@@ -28,6 +28,7 @@ class Actor {
 
             yAcc -= 1;
             if (al.UP && !collisions[2]) yAcc = 12;
+            if (al.DOWN && yAcc > 0) yAcc = 0;
             if(!collisions[0]) yAcc = 0;
             y -= yAcc;
             collisions = detectCollisions(curBlocks);
@@ -56,7 +57,7 @@ class Actor {
         int[] ys = {yPos, yiPos, yPos + 1, yiPos};
         for (int a=0; a<4; a++){
             try{
-                cols[a] = curBlocks[ys[a]][xs[a]] == 0;
+                cols[a] = curBlocks[ys[a]][xs[a]] == -1;
             }catch(ArrayIndexOutOfBoundsException e){
                 cols[a] = false;
             }

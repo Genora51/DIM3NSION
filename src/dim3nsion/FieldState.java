@@ -1,5 +1,7 @@
 package dim3nsion;
 
+import javafx.scene.canvas.GraphicsContext;
+
 import java.io.*;
 
 
@@ -11,7 +13,7 @@ public class FieldState {
         return level;
     }
 
-    public void load(String lname){
+    public void load(String lname, GraphicsContext canvas){
         int[][] res;
         try {
             InputStream is = new FileInputStream("src/res/levels/" + lname + ".d3l");
@@ -29,7 +31,7 @@ public class FieldState {
                 for (int j = 0; j < level[i].length(); j++) {
                     resi[j] = Integer.parseInt(
                             String.valueOf(level[i].charAt(j))
-                    );
+                    ) - 1;
                 }
                 res[i] = resi;
             }
@@ -38,7 +40,7 @@ public class FieldState {
             res = new int[][] {{0}};
         }
         this.level =  res;
-        this.xDiff = (1920 - (res[0].length*48))/2;
-        this.yDiff = (1080 - (res.length*48))/2;
+        this.xDiff = (int) (canvas.getCanvas().getWidth() - (res[0].length*48))/2;
+        this.yDiff = (int) (canvas.getCanvas().getHeight()- (res.length*48))/2;
     }
 }

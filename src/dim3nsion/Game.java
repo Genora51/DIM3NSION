@@ -1,5 +1,6 @@
 package dim3nsion;
 
+import com.sun.prism.Texture;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.GridPane;
@@ -13,6 +14,8 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static dim3nsion.SharedFuncs.absPath;
+
 class Game {
     public Timer timer;
     private GraphicsContext canvas;
@@ -21,17 +24,13 @@ class Game {
     private Actor actor;
     private ActorListener al;
     private FieldState fs;
+    private Textures textures;
     private double h,w;
     private GameStateController gsc;
 
     private void startMusic(){
-        String abspath = "./res/audio";
-        try {
-            abspath ="file:///" +  new File(".").getCanonicalPath().replaceAll("\\\\","/").replaceAll("\\s", "%20") + "/src/res/audio/";
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Media media = new Media(abspath + "1.mp3");
+        String abspath = absPath("src/res/audio");
+        Media media = new Media(abspath + "/1.mp3");
         MediaPlayer mp;
         mp = new MediaPlayer(media);
         MediaView mv = new MediaView(mp);
@@ -44,6 +43,7 @@ class Game {
         this.h = can.getHeight();
         this.w = can.getWidth();
         this.canvas = can.getGraphicsContext2D();
+        this.textures = new Textures();
         System.out.println(new java.io.File(".").getAbsolutePath());
 
     }
@@ -63,7 +63,7 @@ class Game {
         this.al = al;
         gsc = new GameStateController();
         this.fs = new FieldState();
-        fs.load("1");
+        fs.load("1", canvas);
         //canvas.setFill(Color.BLUE);
         //canvas.fillRect(50,50,300,300);
         actor = new Actor(100, 100, canvas, al, gsc);
@@ -75,11 +75,20 @@ class Game {
         canvas.setFill(Color.BLACK);
         canvas.fillRect(0,0,w,h);
         int posy=0;
-        canvas.setFill(Color.RED);
+        Color red;
+        if (gsc.gameState == 0){
+            red = new Color(1,0,0,gsc.loadCountup/gsc.LOAD_LENGTH);
+        }else{
+           red = Color.RED;
+        }
+        canvas.setFill(red);
         for (int[] str : fs.level){
             int posx = 0;
             for (int let : str){
-                if (let == 1) canvas.fillRect(posx + fs.xDiff,posy + fs.yDiff,48,48);
+                if (let != -1){
+                    //canvas.fillRect(posx + fs.xDiff,posy + fs.yDiff,48,48);
+                    canvas.drawImage(textures.get[let], posx + fs.xDiff,posy + fs.yDiff,48,48);
+                }
                 posx += 48;
             }
             posy += 48;
