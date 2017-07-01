@@ -8,22 +8,22 @@ import static dim3nsion.SharedFuncs.bWid;
 public class Textures {
     Image[] get;
     String[] names = {
-            "grass",
-            "soil",
-            "sandtop",
-            "sand",
-            "brick",
-            "cobble",
-            "vinecobble",
-            "iron",
-            "waterbody",
-            "wood"
+            "grass.bmp",
+            "soil.bmp",
+            "sandtop.bmp",
+            "sand.bmp",
+            "brick.bmp",
+            "cobble.bmp",
+            "vinecobble.bmp",
+            "iron.bmp",
+            "waterbody.bmp",
+            "wood.bmp",
+            "endstar.gif"
     };
     public Textures(){
         get = new Image[names.length + 1];
         for(int a =0; a<names.length; a++){
-            get[a] = new Image(getClass().getResourceAsStream("/textures/" + names[a] + ".bmp"), bWid, bHei, true, false);
+            get[a] = new Image(getClass().getResourceAsStream("/textures/" + names[a]), bWid, bHei, true, false);
         }
-        get[names.length] = new Image(getClass().getResourceAsStream("/textures/endstar.gif"), bWid, bHei, true, false);
     }
 }

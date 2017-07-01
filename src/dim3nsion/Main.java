@@ -18,6 +18,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        //System.out.println(getHostServices().getDocumentBase());
+
         loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent root = loader.load();
 

@@ -46,6 +46,7 @@ public class Controller {
     }
 
     private void startGame(){
+        System.out.println("Finished");
         mediaViewPane.getChildren().remove(mv);
         Canvas canvas = new Canvas(mediaViewPane.getWidth(), mediaViewPane.getHeight());
         mediaViewPane.getChildren().add(canvas);

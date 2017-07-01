@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="DIM3NSION">
+    <output-path>$PROJECT_DIR$/out/artifacts/DIM3NSION</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="dim3nsion.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="DIM3NSION" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="DIM3NSION.jar">
+        <element id="module-output" name="DIM3NSION" />
+      </element>
+    </root>
+  </artifact>
+</component>

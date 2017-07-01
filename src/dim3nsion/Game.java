@@ -31,7 +31,7 @@ class Game {
     private void startMusic(){
         //String abspath = absPath("src/res/audio");
         String respat = getClass().getResource("/audio/1.mp3").toString();
-        System.out.println(respat);
+        //System.out.println(respat);
         Media media = new Media(respat);
         MediaPlayer mp;
         mp = new MediaPlayer(media);
