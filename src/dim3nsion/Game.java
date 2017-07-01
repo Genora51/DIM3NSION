@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static dim3nsion.SharedFuncs.absPath;
+import static dim3nsion.SharedFuncs.*;
 
 class Game {
     public Timer timer;
@@ -29,8 +29,10 @@ class Game {
     private GameStateController gsc;
 
     private void startMusic(){
-        String abspath = absPath("src/res/audio");
-        Media media = new Media(abspath + "/1.mp3");
+        //String abspath = absPath("src/res/audio");
+        String respat = getClass().getResource("/audio/1.mp3").toString();
+        System.out.println(respat);
+        Media media = new Media(respat);
         MediaPlayer mp;
         mp = new MediaPlayer(media);
         MediaView mv = new MediaView(mp);
@@ -43,8 +45,9 @@ class Game {
         this.h = can.getHeight();
         this.w = can.getWidth();
         this.canvas = can.getGraphicsContext2D();
+        SharedFuncs.setVals(canvas);
         this.textures = new Textures();
-        System.out.println(new java.io.File(".").getAbsolutePath());
+        //System.out.println(new java.io.File(".").getAbsolutePath());
 
     }
 
@@ -72,22 +75,15 @@ class Game {
     }
 
     private void draw(){
-        canvas.setFill(Color.BLACK);
-        canvas.fillRect(0,0,w,h);
+        canvas.setFill(Color.SKYBLUE);
+        canvas.fillRect(fs.xDiff,fs.yDiff,gWid,gHei);
         int posy=0;
-        Color red;
-        if (gsc.gameState == 0){
-            red = new Color(1,0,0,gsc.loadCountup/gsc.LOAD_LENGTH);
-        }else{
-           red = Color.RED;
-        }
-        canvas.setFill(red);
         for (int[] str : fs.level){
             int posx = 0;
             for (int let : str){
                 if (let != -1){
                     //canvas.fillRect(posx + fs.xDiff,posy + fs.yDiff,48,48);
-                    canvas.drawImage(textures.get[let], posx + fs.xDiff,posy + fs.yDiff,48,48);
+                    canvas.drawImage(textures.get[let], posx + fs.xDiff,posy + fs.yDiff,bWid, bHei);
                 }
                 posx += 48;
             }
@@ -96,11 +92,6 @@ class Game {
     }
 
     private void detectGameEvents(){
-        if (gsc.gameState == 0){
-            Color newBlue = new Color(0,0,1,(gsc.loadCountup/gsc.LOAD_LENGTH));
-            canvas.setFill(newBlue);
-            canvas.fillRect(100 + fs.xDiff,100 + fs.yDiff,50,50);
-        }
     }
 
     private void moveCharacter(){

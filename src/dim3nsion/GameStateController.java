@@ -1,10 +1,7 @@
 package dim3nsion;
 
-/**
- * Created by Genora51 on 24/06/2017.
- */
-public class GameStateController {
-    public final float LOAD_LENGTH = 32;
+class GameStateController {
+    final float LOAD_LENGTH = 32;
 
     public int gameState = 0;
     public int loadCountup = 0;

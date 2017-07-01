@@ -20,7 +20,7 @@
          <mediaPlayer>
             <MediaPlayer autoPlay="false">
                <media>
-                  <Media source="@/res/videos/dim3nsion.mp4" />
+                  <Media source="@/videos/dim3nsion.mp4" />
                </media>
             </MediaPlayer>
          </mediaPlayer>

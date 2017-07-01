@@ -1,22 +1,16 @@
 package dim3nsion;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-
-import java.io.File;
-import java.io.IOException;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 public class SharedFuncs {
-    public static String absPath(String src){
-        String ap;
-        try {
-            ap = "file:///" +  new File(".").getCanonicalPath().replaceAll("\\\\","/").replaceAll("\\s", "%20") + "/" + src;
-        } catch (IOException e) {
-            e.printStackTrace();
-            ap = "";
-        }
-        return ap;
+    static int gWid, gHei, bWid, bHei, pWid, pHei;
+    public static void setVals(GraphicsContext c){
+        Canvas ca = c.getCanvas();
+        int w =(int) ca.getWidth();
+        pWid = pHei = Math.floorDiv(w, 16*32);
+        bWid = bHei = pWid * 16;
+        gWid = bWid * 32;
+        gHei = bHei * 16;
     }
 }

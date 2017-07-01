@@ -3,6 +3,8 @@ package dim3nsion;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import static dim3nsion.SharedFuncs.*;
+
 
 class Actor {
     private int x;
@@ -23,35 +25,35 @@ class Actor {
     void move(FieldState fs){
         int[][] curBlocks = fs.getState();
         if (gsc.gameState == 1) {
-            if (collisions[1] && al.RIGHT) x += 6;
-            if (collisions[3] && al.LEFT) x -= 6;
+            if (collisions[1] && al.RIGHT) x += pWid * 2;
+            if (collisions[3] && al.LEFT) x -= pWid * 2;
 
-            yAcc -= 1;
-            if (al.UP && !collisions[2]) yAcc = 12;
+            yAcc -= pHei / 3;
+            if (al.UP && !collisions[2]) yAcc = pHei * 4;
             if (al.DOWN && yAcc > 0) yAcc = 0;
             if(!collisions[0]) yAcc = 0;
             y -= yAcc;
             collisions = detectCollisions(curBlocks);
             if (!collisions[2]){
                 yAcc = 0;
-                y = Math.floorDiv(y, 48) * 48;
+                y = Math.floorDiv(y, bHei) * bHei;
             }
             if (!collisions[0]){
                 yAcc = 0;
-                y = (Math.floorDiv(y, 48) + 1) * 48;
+                y = (Math.floorDiv(y, bHei) + 1) * bHei;
             }
-            if (!collisions[1]) x = Math.floorDiv(x, 48) * 48;
-            if (!collisions[3]) x = (Math.floorDiv(x, 48) + 1) * 48;
+            if (!collisions[1]) x = Math.floorDiv(x, bWid) * bWid;
+            if (!collisions[3]) x = (Math.floorDiv(x, bWid) + 1) * bWid;
             canvas.setFill(Color.BLUE);
-            canvas.fillRect(x + fs.xDiff, y + fs.yDiff, 48, 48);
+            canvas.fillRect(x + fs.xDiff, y + fs.yDiff, bWid, bHei);
         }
     }
 
     private boolean[] detectCollisions(int[][] curBlocks) {
-        int yPos = Math.floorDiv(y, 48);
-        int xPos = Math.floorDiv(x, 48);
-        int xiPos = Math.floorDiv(x + 24, 48);
-        int yiPos = Math.floorDiv(y + 24, 48);
+        int yPos = Math.floorDiv(y, bHei);
+        int xPos = Math.floorDiv(x, bHei);
+        int xiPos = Math.floorDiv(x + (bWid/2), bWid);
+        int yiPos = Math.floorDiv(y + (bHei/2), bHei);
         boolean[] cols = new boolean[4];
         int[] xs = {xiPos, xPos + 1, xiPos, xPos};
         int[] ys = {yPos, yiPos, yPos + 1, yiPos};

@@ -9,23 +9,16 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.GridPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.IOException;
 
 public class Main extends Application {
     private FXMLLoader loader;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        loader = new FXMLLoader(getClass().getResource("main.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent root = loader.load();
 
         // Set timer for mediaView
