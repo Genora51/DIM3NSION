@@ -40,13 +40,13 @@ class Game {
         mp.play();
     }
 
-    Game(Canvas can, GridPane gp){
+    Game(Canvas can, GridPane gp, Textures textures){
         this.gp = gp;
         this.h = can.getHeight();
         this.w = can.getWidth();
         this.canvas = can.getGraphicsContext2D();
-        SharedFuncs.setVals(canvas);
-        this.textures = new Textures();
+        this.textures = textures;
+
         //System.out.println(new java.io.File(".").getAbsolutePath());
 
     }
@@ -92,6 +92,9 @@ class Game {
     }
 
     private void detectGameEvents(){
+        if(gsc.gameState == 0){
+            canvas.drawImage(textures.glitchin[gsc.loadCountup], fs.xDiff, fs.yDiff, gWid, gHei);
+        }
     }
 
     private void moveCharacter(){

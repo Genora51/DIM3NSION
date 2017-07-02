@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import javafx.util.Duration;
 
 public class Controller {
     public Game game;
+    private Textures textures;
 
     @FXML
     private MediaView mv;
@@ -28,6 +30,8 @@ public class Controller {
     void startAndBind(){
         MediaPlayer mp = mv.getMediaPlayer();
         mp.setOnEndOfMedia(this::startGame);
+        SharedFuncs.setVals();
+        textures = new Textures();
         EventHandler<KeyEvent> okp = new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -52,7 +56,7 @@ public class Controller {
         mediaViewPane.getChildren().add(canvas);
         GridPane.setHalignment(canvas, HPos.CENTER);
         GridPane.setValignment(canvas, VPos.CENTER);
-        this.game = new Game(canvas, mediaViewPane);
+        this.game = new Game(canvas, mediaViewPane, textures);
         ActorListener al = new ActorListener(mediaViewPane);
         game.start(al);
     }

@@ -1,10 +1,10 @@
 package dim3nsion;
 
 class GameStateController {
-    final float LOAD_LENGTH = 32;
+    final float LOAD_LENGTH = 14;
 
     public int gameState = 0;
-    public int loadCountup = 0;
+    public int loadCountup = -1;
     public GameStateController(){
 
     }
@@ -12,7 +12,7 @@ class GameStateController {
         gameState = mode;
         switch(mode){
             case 0:
-               loadCountup = 0;
+               loadCountup = -1;
                break;
         }
     }

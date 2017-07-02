@@ -3,6 +3,7 @@ package dim3nsion;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+
 public class Main extends Application {
     private FXMLLoader loader;
 
@@ -22,12 +24,8 @@ public class Main extends Application {
 
         loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent root = loader.load();
-
+        getController().startAndBind();
         // Set timer for mediaView
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae->getController().startAndBind()));
-        timeline.play();
         // Start game
         primaryStage.setTitle("DIM3NSION");
         Scene rts = new Scene(root, 1920, 1080);
@@ -35,15 +33,13 @@ public class Main extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
         primaryStage.show();
+
         rts.setCursor(Cursor.NONE);
         rts.getRoot().requestFocus();
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    getController().game.timer.cancel();
-                }catch (NullPointerException e){
-                }
+        primaryStage.setOnCloseRequest(event -> {
+            try {
+                getController().game.timer.cancel();
+            }catch (NullPointerException ignored){
             }
         });
     }
