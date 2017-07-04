@@ -3,6 +3,10 @@ package dim3nsion;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import static dim3nsion.SharedFuncs.*;
 
 
@@ -14,6 +18,10 @@ class Actor {
     private GraphicsContext canvas;
     private ActorListener al;
     private GameStateController gsc;
+    private static final Integer[] dv = {-1,5,6};
+    private static final Set<Integer> downVals = new HashSet<Integer>(Arrays.asList(dv));
+
+
     Actor(int x, int y, GraphicsContext canvas, ActorListener al, GameStateController gsc){
         this.x = x;
         this.y = y;
@@ -59,7 +67,7 @@ class Actor {
         int[] ys = {yPos, yiPos, yPos + 1, yiPos};
         for (int a=0; a<4; a++){
             try{
-                cols[a] = curBlocks[ys[a]][xs[a]] == -1;
+                cols[a] = curBlocks[ys[a]][xs[a]] < 4;
             }catch(ArrayIndexOutOfBoundsException e){
                 cols[a] = false;
             }

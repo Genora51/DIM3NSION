@@ -32,6 +32,7 @@ public class Controller {
         mp.setOnEndOfMedia(this::startGame);
         SharedFuncs.setVals();
         textures = new Textures();
+        textures.load(1);
         EventHandler<KeyEvent> okp = new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
