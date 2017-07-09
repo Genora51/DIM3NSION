@@ -85,9 +85,9 @@ class Game {
                     //canvas.fillRect(posx + fs.xDiff,posy + fs.yDiff,48,48);
                     canvas.drawImage(textures.get[let], posx + fs.xDiff,posy + fs.yDiff,bWid, bHei);
                 }
-                posx += 48;
+                posx += bWid;
             }
-            posy += 48;
+            posy += bHei;
         }
     }
 
